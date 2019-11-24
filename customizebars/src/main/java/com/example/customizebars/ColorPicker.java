@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,16 +29,17 @@ public class ColorPicker extends AppCompatActivity {
     private SaturationBar saturationBar;
     private View second;
     private View third;
-    private LinearLayout lm;
+    private ScrollView lm;
+    private LinearLayout smback;
     private final String PREFERENCE_FILE_KEY = "Colorpreferences";
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPref;
     private String descriptionStatusBar = "StatusBar";
     private String descriptionActionBar = "ActionBar";
     private String descriptionBackground = "Background";
-    private int defaultStatusbar = 0;
-    private int defaultActionbar = 0;
-    private int defaultbackground = 0;
+    private int defaultStatusbar = Color.parseColor("#6e5e34");
+    private int defaultActionbar = Color.parseColor("#30270f");
+    private int defaultbackground = Color.parseColor("#b8b7b6");
     private int statusbar;
     private int actionbar;
     private String myActivityName;
@@ -48,6 +50,9 @@ public class ColorPicker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.color_picker);
 
+        first = findViewById(R.id.statusbar);
+        second = findViewById(R.id.actionbar);
+        third = findViewById(R.id.background);
         picker = findViewById(R.id.picker);
         valueBar = (ValueBar) findViewById(R.id.valuebar);
         opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
@@ -56,6 +61,7 @@ public class ColorPicker extends AppCompatActivity {
         picker.addOpacityBar(opacityBar);
         picker.addSaturationBar(saturationBar);
         lm = findViewById(R.id.mainback);
+        smback = findViewById(R.id.smallback);
         myActivityName = getIntent().getStringExtra("NextActivity");
 
         sharedPref = ColorPicker.this.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
@@ -66,15 +72,16 @@ public class ColorPicker extends AppCompatActivity {
         background = sharedPref.getInt(descriptionBackground, defaultbackground);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionbar));
+        second.setBackgroundColor(actionbar);
         lm.setBackgroundColor(background);
+        smback.setBackgroundColor(background);
+        third.setBackgroundColor(background);
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(statusbar);
+        first.setBackgroundColor(statusbar);
 
-        first = findViewById(R.id.statusbar);
-        second = findViewById(R.id.actionbar);
-        third = findViewById(R.id.background);
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +114,7 @@ public class ColorPicker extends AppCompatActivity {
                 picker.setOldCenterColor(picker.getColor());
                 third.setBackgroundColor(picker.getColor());
                 lm.setBackgroundColor(picker.getColor());
+                smback.setBackgroundColor(picker.getColor());
                 editor.putInt(descriptionBackground, picker.getColor());
                 editor.apply();
             }

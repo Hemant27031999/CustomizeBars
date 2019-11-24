@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
@@ -35,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements SensorListener {
     private int statusbar;
     private int actionbar;
     private int background;
-    private int defaultStatusbar = 0;
-    private int defaultActionbar = 0;
-    private int defaultbackground = 0;
+    private int defaultStatusbar = Color.parseColor("#6e5e34");
+    private int defaultActionbar = Color.parseColor("#30270f");
+    private int defaultbackground = Color.parseColor("#b8b7b6");
     private String myActivityName;
     public int helper = 0;
 
