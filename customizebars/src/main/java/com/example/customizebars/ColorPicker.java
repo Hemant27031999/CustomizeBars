@@ -61,7 +61,6 @@ public class ColorPicker extends AppCompatActivity {
         picker.addOpacityBar(opacityBar);
         picker.addSaturationBar(saturationBar);
         lm = findViewById(R.id.mainback);
-        smback = findViewById(R.id.smallback);
         myActivityName = getIntent().getStringExtra("NextActivity");
 
         sharedPref = ColorPicker.this.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
@@ -74,7 +73,6 @@ public class ColorPicker extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionbar));
         second.setBackgroundColor(actionbar);
         lm.setBackgroundColor(background);
-        smback.setBackgroundColor(background);
         third.setBackgroundColor(background);
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -114,7 +112,6 @@ public class ColorPicker extends AppCompatActivity {
                 picker.setOldCenterColor(picker.getColor());
                 third.setBackgroundColor(picker.getColor());
                 lm.setBackgroundColor(picker.getColor());
-                smback.setBackgroundColor(picker.getColor());
                 editor.putInt(descriptionBackground, picker.getColor());
                 editor.apply();
             }
