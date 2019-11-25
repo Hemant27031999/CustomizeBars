@@ -46,9 +46,16 @@ Declare the following variables inside the class :
 private ScrollView {YOUR BASE LAYOUT};
 private SensorManager sensorMgr;
 ```
+</br>
 The view initialized in the first line is the base view of this activity. It can be any base/background view like Linear Layout, Relative Layout, Scroll View etc. The background color which you will choose will be added to this view. The second variable is a SensorManager's object which access the device's sensors.
-</br></br>
+
+</br>
+</br>
+
 Make the class to implement SensorListener
+
+</br>
+
 ```java
 public class MainActivity extends AppCompatActivity implements SensorListener {
 ...
@@ -58,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements SensorListener {
 </br>
 </br>
 
-Implements the required methods of SensorListener inside activity 
+Implement the required methods of SensorListener inside the activity 
+</br>
 ```java
 @Override
     public void onSensorChanged(int sensor, float[] values) {
@@ -101,13 +109,66 @@ Implements the required methods of SensorListener inside activity
 </br>
 
 Initialize the declared variables and call the method to add your previously selected theme to your activity. Add the following code to your onCreate method.
+</br>
 ```java
 {YOUR BASE LAYOUT} = findViewById(R.id.{BASE_LAYOUT_ID});
 sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
 // this method reads the old theme from shared preferences and apply them
 HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
 ```
+</br>
+Now open the app, go to the activity, shake your phone and BOOM
 
+</br>
+</br>
+
+## Don't want to have SensorListener ?
+
+</br>
+
+If you have your SensorListener implemented for some other purpose or if you want to open the theme selecting activity by some other mean, you are free to do so. Follow the given procedure :
+
+</br>
+
+Declare your base view inside the required class :
+
+```java
+private ScrollView {YOUR BASE LAYOUT};
+```
+
+</br>
+
+Initialize it inside your onCreate method and call the method to add your previously selected theme to your activity.
+
+</br>
+
+```java
+{YOUR BASE LAYOUT} = findViewById(R.id.{BASE_LAYOUT_ID});
+// this method reads the old theme from shared preferences and apply them
+HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
+```
+
+</br>
+
+Call the Intent to ColorPicker Activity in whatsoever way you want. For eg, if you want to open it upon a button click, do it as follow :
+
+</br>
+
+```java
+{BUTTON}.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // The Intent which take you to the ColorPicker activity
+                Intent intent = new Intent(MainActivity.this, ColorPicker.class);
+                intent.putExtra("NextActivity", this.getClass().getName());
+                startActivity(intent);
+                finish();
+            }
+        });
+```
+</br>
+And there you go :)
+</br>
 </br>
 
 ## Bugs or Issues
