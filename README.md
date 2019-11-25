@@ -28,7 +28,17 @@ Finally that theme will be applied to all those activities for which you choose 
 
 
 #### Adding Dependency
-Add the following Dependency to your app gradle file
+First add the repository into your project gradle file
+
+```java
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Then add the following Dependency to your app gradle file
 
 ```java
 dependencies {
