@@ -41,45 +41,30 @@ dependencies {
 #### Adding code in required Activities
 Add the following code in **all those activities in which you want to have your chosen theme implemented.**
 <br/>
-Initialize the following variables inside the class :
+Declare the following variables inside the class :
 ```java
 private ScrollView {YOUR BASE LAYOUT};
 private SensorManager sensorMgr;
-private final int SHAKE_THRESHOLD = 500;
-long lastUpdate = 0;
-float last_x = 0;
-float last_y = 0;
-float last_z = 0;
-private final String PREFERENCE_FILE_KEY = "Colorpreferences";
-private SharedPreferences.Editor editor;
-private SharedPreferences sharedPref;
-private String descriptionStatusBar = "StatusBar";
-private String descriptionActionBar = "ActionBar";
-private String descriptionBackground = "Background";
-private int statusbar;
-private int actionbar;
-private int background;
-private int defaultStatusbar = Color.parseColor("#6e5e34");
-private int defaultActionbar = Color.parseColor("#30270f");
-private int defaultbackground = Color.parseColor("#b8b7b6");
-private String myActivityName;
-public int helper = 0;
 ```
-The view initialized in the first line is the base view of this activity.</br></br>
+The view initialized in the first line is the base view of this activity. It can be any base/background view like Linear Layout, Relative Layout, Scroll View etc. The background color which you will choose will be added to this view. The second variable is a SensorManager's object which access the device's sensors.
+</br></br>
 Make the class to implement SensorListener
 ```java
 public class MainActivity extends AppCompatActivity implements SensorListener {
 ...
 }
 ```
-</br></br>
+
+</br>
+</br>
+
 Implements the required methods of SensorListener inside activity 
 ```java
 @Override
     public void onSensorChanged(int sensor, float[] values) {
         if (sensor == SensorManager.SENSOR_ACCELEROMETER && helper<1) {
             long curTime = System.currentTimeMillis();
-            // only allow one update every 100ms.
+
             if ((curTime - lastUpdate) > 500) {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
@@ -90,11 +75,11 @@ Implements the required methods of SensorListener inside activity
 
                 float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
-                if (speed > SHAKE_THRESHOLD) {
-                    Log.d("sensor", "shake detected w/ speed: " + speed);
-                    Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+                if (speed > 500) {
+                
+                    // The Intent which take you to the ColorPicker activity
                     Intent intent = new Intent(MainActivity.this, ColorPicker.class);
-                    intent.putExtra("NextActivity", myActivityName);
+                    intent.putExtra("NextActivity", this.getClass().getName());
                     startActivity(intent);
                     finish();
                     helper++;
@@ -111,30 +96,16 @@ Implements the required methods of SensorListener inside activity
 
     }
 ```
-</br></br>
-and finally add the following code to your onCreate method
+
+</br>
+</br>
+
+Initialize the declared variables and call the method to add your previously selected theme to your activity. Add the following code to your onCreate method.
 ```java
 {YOUR BASE LAYOUT} = findViewById(R.id.{BASE_LAYOUT_ID});
 sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
-    sharedPref = getSharedPreferences(PREFERENCE_FILE_KEY, this.MODE_PRIVATE);
-    editor = sharedPref.edit();
-    statusbar = sharedPref.getInt(descriptionStatusBar, defaultStatusbar);
-    actionbar = sharedPref.getInt(descriptionActionBar, defaultActionbar);
-    background = sharedPref.getInt(descriptionBackground, defaultbackground);
-    String s = this.getClass().getName();
-    myActivityName = s;
-
-    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionbar));
-    {YOUR BASE LAYOUT}.setBackgroundColor(background);
-    Window window = getWindow();
-    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-    window.setStatusBarColor(statusbar);
-
-    sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
-    sensorMgr.registerListener((SensorListener) this,
-            SensorManager.SENSOR_ACCELEROMETER,
-            SensorManager.SENSOR_DELAY_GAME);
+// this method reads the old theme from shared preferences and apply them
+HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
 ```
 
 </br>
