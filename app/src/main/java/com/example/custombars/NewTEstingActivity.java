@@ -4,20 +4,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.example.customizebars.ColorPicker;
 import com.example.customizebars.HandlingColorPicker;
@@ -30,24 +24,23 @@ import static com.example.customizebars.HandlingColorPicker.last_x;
 import static com.example.customizebars.HandlingColorPicker.last_y;
 import static com.example.customizebars.HandlingColorPicker.last_z;
 
-public class MainActivity extends AppCompatActivity implements SensorListener {
+public class NewTEstingActivity extends AppCompatActivity implements SensorListener {
 
-    private LinearLayout ll;
+    private RelativeLayout ll;
     private Button b1;
 
     private SensorManager sensorMgr;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        b1= findViewById(R.id.click1);
+        setContentView(R.layout.activity_new_testing);
 
-        sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
-        ll = findViewById(R.id.testb);
+        b1= findViewById(R.id.click2);
 
-        HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
+        ll = findViewById(R.id.back2);
+
+        HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), NewTEstingActivity.this);
 
         sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorMgr.registerListener((SensorListener) this,
@@ -57,11 +50,10 @@ public class MainActivity extends AppCompatActivity implements SensorListener {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewTEstingActivity.class);
+                Intent intent = new Intent(NewTEstingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -80,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SensorListener {
                 float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
                 if (speed > 500) {
-                    Intent intent = new Intent(MainActivity.this, ColorPicker.class);
+                    Intent intent = new Intent(NewTEstingActivity.this, ColorPicker.class);
                     intent.putExtra("NextActivity", this.getClass().getName());
                     startActivity(intent);
                     finish();

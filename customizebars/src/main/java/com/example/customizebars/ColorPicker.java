@@ -123,6 +123,7 @@ public class ColorPicker extends AppCompatActivity {
         Log.d("CDA", "onBackPressed Called");
         try {
             Class<?> c = Class.forName(myActivityName);
+            HandlingColorPicker.helper = 0;
             Intent setIntent = new Intent(ColorPicker.this, c);
             startActivity(setIntent);
         } catch (ClassNotFoundException e) {
