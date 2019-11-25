@@ -43,7 +43,7 @@ Then add the following Dependency to your app gradle file
 ```java
 dependencies {
     ...
-    implementation 'com.github.Hemant27031999:CustomizeBars:0.1.3'
+    implementation 'com.github.Hemant27031999:CustomizeBars:0.1.4'
 }
 ```
 </br>
