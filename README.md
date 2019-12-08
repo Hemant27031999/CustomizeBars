@@ -114,7 +114,7 @@ Initialize the declared variables and call the method to add your previously sel
 {YOUR BASE LAYOUT} = findViewById(R.id.{BASE_LAYOUT_ID});
 sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
 // this method reads the old theme from shared preferences and apply them
-HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
+HandlingColorPicker.addPreviousValues({YOUR BASE LAYOUT}, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
 ```
 </br>
 Now open the app, go to the activity, shake your phone and BOOM
@@ -145,7 +145,7 @@ Initialize it inside your onCreate method and call the method to add your previo
 ```java
 {YOUR BASE LAYOUT} = findViewById(R.id.{BASE_LAYOUT_ID});
 // this method reads the old theme from shared preferences and apply them
-HandlingColorPicker.addPreviousValues(ll, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
+HandlingColorPicker.addPreviousValues({YOUR BASE LAYOUT}, getWindow(), Objects.requireNonNull(getSupportActionBar()), MainActivity.this);
 ```
 
 </br>
